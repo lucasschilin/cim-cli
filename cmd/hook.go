@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/lucasschilin/commit-improver-cli/internal/commit"
 	"github.com/spf13/cobra"
 )
 
@@ -17,8 +18,14 @@ var hookCmd = &cobra.Command{
 
 		path := args[0]
 
-		fmt.Println("Hook called")
-		fmt.Println("Commit message file:", path)
+		message, err := commit.ReadCommitMessage(path)
+		if err != nil {
+			fmt.Println("Error reading commit message:", err)
+			return
+		}
+
+		fmt.Println("Original message:")
+		fmt.Println(message)
 	},
 }
 
