@@ -1,7 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/lucasschilin/commit-improver-cli/cmd"
+)
 
 func main() {
-	fmt.Println("Commit Improver CLI")
+	if err := cmd.Execute(); err != nil {
+		fmt.Println(err)
+	}
 }
