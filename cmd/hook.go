@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/lucasschilin/commit-improver-cli/internal/commit"
+	"github.com/lucasschilin/commit-improver-cli/internal/git"
 	"github.com/spf13/cobra"
 )
 
@@ -27,15 +28,16 @@ var hookCmd = &cobra.Command{
 		fmt.Println("Original message:")
 		fmt.Println(message)
 
-		newMessage := "fix(auth): just a little test :D"
-
-		err = commit.WriteCommitMessage(path, newMessage)
+		diff, err := git.GetStagedDiff()
 		if err != nil {
-			fmt.Println("Error writing commit message:", err)
+			fmt.Println("Error reading diff:", err)
 			return
 		}
 
-		fmt.Println("Message replaced")
+		diff = git.LimitDiff(diff, 200)
+
+		fmt.Println("Diff:")
+		fmt.Println(diff)
 	},
 }
 
