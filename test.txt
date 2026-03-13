@@ -1,1 +1,1 @@
-fix(auth): just a little test :D
+implementado integração com gemini
