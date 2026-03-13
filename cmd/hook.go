@@ -26,6 +26,16 @@ var hookCmd = &cobra.Command{
 
 		fmt.Println("Original message:")
 		fmt.Println(message)
+
+		newMessage := "fix(auth): just a little test :D"
+
+		err = commit.WriteCommitMessage(path, newMessage)
+		if err != nil {
+			fmt.Println("Error writing commit message:", err)
+			return
+		}
+
+		fmt.Println("Message replaced")
 	},
 }
 
