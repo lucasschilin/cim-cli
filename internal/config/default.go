@@ -1,0 +1,23 @@
+package config
+
+const DefaultConfigTemplate = `# Commit Improver CLI configuration
+#
+# Required fields must be filled for the CLI to work.
+
+# LLM provider used to improve commits. Options: 'gemini'
+provider: gemini #REQUIRED
+
+# Model name used by the provider
+model: gemini-2.5-flash #REQUIRED
+
+# Language used for generated commits. Options: 'en' (English), 'pt-BR' (Português do Brasil) or 'es' (Español)
+language: en #REQUIRED
+
+# Maximum number of diff lines sent to the LLM
+diff_limit: 200 #REQUIRED
+
+gemini:
+  # Gemini API key
+  api_key: #REQUIRED
+
+`

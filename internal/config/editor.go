@@ -7,6 +7,7 @@ import (
 )
 
 func EnsureConfigFile(path string) error {
+
 	dir := filepath.Dir(path)
 
 	err := os.MkdirAll(dir, 0755)
@@ -15,13 +16,10 @@ func EnsureConfigFile(path string) error {
 	}
 
 	if _, err := os.Stat(path); os.IsNotExist(err) {
-
-		file, err := os.Create(path)
+		err := os.WriteFile(path, []byte(DefaultConfigTemplate), 0644)
 		if err != nil {
 			return err
 		}
-
-		defer file.Close()
 	}
 
 	return nil
