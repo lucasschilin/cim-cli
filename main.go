@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/lucasschilin/commit-improver-cli/cmd"
+	"github.com/lucasschilin/cim-cli/cmd"
 )
 
 func main() {

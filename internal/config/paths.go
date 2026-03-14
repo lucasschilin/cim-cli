@@ -8,13 +8,13 @@ import (
 func GlobalConfigPath() string {
 	home, _ := os.UserHomeDir()
 
-	return filepath.Join(home, ".commit-improver-cli", "config.yaml")
+	return filepath.Join(home, ".cim-cli", "config.yaml")
 }
 
 func RepoSharedConfigPath(repoRoot string) string {
-	return filepath.Join(repoRoot, ".commit-improver-cli", "config.yaml")
+	return filepath.Join(repoRoot, ".cim-cli", "config.yaml")
 }
 
 func RepoUserConfigPath(repoRoot string) string {
-	return filepath.Join(repoRoot, ".git", ".commit-improver-cli", "config.yaml")
+	return filepath.Join(repoRoot, ".git", ".cim-cli", "config.yaml")
 }

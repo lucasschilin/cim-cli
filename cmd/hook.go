@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/lucasschilin/commit-improver-cli/internal/ai"
-	"github.com/lucasschilin/commit-improver-cli/internal/commit"
-	"github.com/lucasschilin/commit-improver-cli/internal/config"
-	"github.com/lucasschilin/commit-improver-cli/internal/editor"
-	"github.com/lucasschilin/commit-improver-cli/internal/git"
-	"github.com/lucasschilin/commit-improver-cli/internal/prompt"
-	"github.com/lucasschilin/commit-improver-cli/internal/ui"
+	"github.com/lucasschilin/cim-cli/internal/ai"
+	"github.com/lucasschilin/cim-cli/internal/commit"
+	"github.com/lucasschilin/cim-cli/internal/config"
+	"github.com/lucasschilin/cim-cli/internal/editor"
+	"github.com/lucasschilin/cim-cli/internal/git"
+	"github.com/lucasschilin/cim-cli/internal/prompt"
+	"github.com/lucasschilin/cim-cli/internal/ui"
 	"github.com/spf13/cobra"
 )
 

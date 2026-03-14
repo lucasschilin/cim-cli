@@ -3,9 +3,9 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/lucasschilin/commit-improver-cli/internal/config"
-	"github.com/lucasschilin/commit-improver-cli/internal/editor"
-	"github.com/lucasschilin/commit-improver-cli/internal/git"
+	"github.com/lucasschilin/cim-cli/internal/config"
+	"github.com/lucasschilin/cim-cli/internal/editor"
+	"github.com/lucasschilin/cim-cli/internal/git"
 	"github.com/spf13/cobra"
 )
 
