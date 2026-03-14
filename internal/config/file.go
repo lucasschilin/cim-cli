@@ -2,7 +2,6 @@ package config
 
 import (
 	"os"
-	"os/exec"
 	"path/filepath"
 )
 
@@ -23,24 +22,4 @@ func EnsureConfigFile(path string) error {
 	}
 
 	return nil
-}
-
-func OpenEditor(path string) error {
-	editor := os.Getenv("EDITOR")
-
-	if editor == "" {
-		editor = os.Getenv("VISUAL")
-	}
-
-	if editor == "" {
-		editor = "vi"
-	}
-
-	cmd := exec.Command(editor, path)
-
-	cmd.Stdin = os.Stdin
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-
-	return cmd.Run()
 }

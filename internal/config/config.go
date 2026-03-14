@@ -8,6 +8,8 @@ type Config struct {
 	Language  string `yaml:"language"`
 	DiffLimit int    `yaml:"diff_limit"`
 
+	AllowFinalEdit bool `yaml:"allow_final_edit"`
+
 	Gemini struct {
 		APIKey string `yaml:"api_key"`
 	} `yaml:"gemini"`

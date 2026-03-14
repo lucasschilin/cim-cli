@@ -1,1 +1,1 @@
-feat: implement configurations files reading and implement configurations from multiple sources
+feat: Allow final edit of improved (or not) commit message

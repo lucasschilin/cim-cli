@@ -2,19 +2,22 @@
 #
 # Required fields must be filled for the CLI to work.
 
-# LLM provider used to improve commits. Options: 'gemini'
-provider: gemini #REQUIRED
+# LLM provider used to improve commits. Options: 'gemini'. Default: 'gemini'
+provider: gemini
 
-# Model name used by the provider
-model: gemini-2.5-flash #REQUIRED
+# Model name used by the provider. Default: 'gemini-2.5-flash'
+model: gemini-2.5-flash
 
-# Language used for generated commits. Options: 'en' (English), 'pt-BR' (Português do Brasil) or 'es' (Español)
-language: en #REQUIRED
+# Language used for generated commits. Options: 'en' (English), 'pt-BR' (Português do Brasil) or 'es' (Español). Default: 'en'
+language: en
 
-# Maximum number of diff lines sent to the LLM
-diff_limit: 200 #REQUIRED
+# Maximum number of diff lines sent to the LLM. Default: 200
+diff_limit: 0
+
+# Allow the user to edit the final commit message. Default: false
+allow_final_edit: true
 
 gemini:
   # Gemini API key
-  api_key: #REQUIRED (not indicated for --repo configurations, as it will be versioned with the code)
+  api_key: # REQUIRED (not indicated for --repo configurations, as it will be versioned with the code)
 

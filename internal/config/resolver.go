@@ -56,6 +56,10 @@ func mergeConfig(dst *Config, src *Config) {
 		dst.DiffLimit = src.DiffLimit
 	}
 
+	if src.AllowFinalEdit == true {
+		dst.AllowFinalEdit = src.AllowFinalEdit
+	}
+
 	if src.Gemini.APIKey != "" {
 		dst.Gemini.APIKey = src.Gemini.APIKey
 	}

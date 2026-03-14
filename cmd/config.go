@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/lucasschilin/commit-improver-cli/internal/config"
+	"github.com/lucasschilin/commit-improver-cli/internal/editor"
 	"github.com/lucasschilin/commit-improver-cli/internal/git"
 	"github.com/spf13/cobra"
 )
@@ -48,9 +49,10 @@ var configCmd = &cobra.Command{
 		}
 
 		if editorFlag != false {
-			return config.OpenEditor(path)
+			return editor.Open(path)
 		}
 
+		fmt.Println("You need to inform which way you want to edit the configuration.\nUse one of the following flags: --editor")
 		return nil
 	},
 }

@@ -8,6 +8,7 @@ import (
 	"github.com/lucasschilin/commit-improver-cli/internal/ai"
 	"github.com/lucasschilin/commit-improver-cli/internal/commit"
 	"github.com/lucasschilin/commit-improver-cli/internal/config"
+	"github.com/lucasschilin/commit-improver-cli/internal/editor"
 	"github.com/lucasschilin/commit-improver-cli/internal/git"
 	"github.com/lucasschilin/commit-improver-cli/internal/prompt"
 	"github.com/lucasschilin/commit-improver-cli/internal/ui"
@@ -80,16 +81,29 @@ var hookCmd = &cobra.Command{
 			return
 		}
 
-		if !accepted {
+		if accepted {
+			err = commit.WriteCommitMessage(path, improvedMessage)
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+		}
+
+		if !cfg.AllowFinalEdit {
 			return
 		}
 
-		err = commit.WriteCommitMessage(path, improvedMessage)
+		editCommitMessage, err := ui.Confirm("Do you want to make a final edit to the commit message?")
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
-
+		if editCommitMessage {
+			err := editor.Open(path)
+			if err != nil {
+				fmt.Println("failed to open editor:", err)
+			}
+		}
 	},
 }
 
