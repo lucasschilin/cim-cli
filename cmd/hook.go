@@ -12,6 +12,7 @@ import (
 	"github.com/lucasschilin/commit-improver-cli/internal/commit"
 	"github.com/lucasschilin/commit-improver-cli/internal/git"
 	"github.com/lucasschilin/commit-improver-cli/internal/prompt"
+	"github.com/lucasschilin/commit-improver-cli/internal/ui"
 	"github.com/spf13/cobra"
 )
 
@@ -72,14 +73,36 @@ var hookCmd = &cobra.Command{
 
 		prompt := prompt.Build(message, diff, "en")
 
-		improved, err := provider.ImproveCommitMessage(ctx, prompt)
+		improvedMessage, err := provider.ImproveCommitMessage(ctx, prompt)
 		if err != nil {
 			fmt.Println("AI error:", err)
 			return
 		}
 
 		fmt.Println("Improved message:")
-		fmt.Println(improved)
+		fmt.Println(improvedMessage)
+
+		ui.ShowPreview(message, improvedMessage)
+
+		accepted, err := ui.Confirm("Apply improved commit message?")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		if !accepted {
+			fmt.Println("Keeping with original commit message.")
+			return
+		}
+
+		err = commit.WriteCommitMessage(path, improvedMessage)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		fmt.Println("Commit message updated.")
+
 	},
 }
 
