@@ -1,1 +1,1 @@
-feat: implement 'deinit' command, feature who removes commit-msg from .git/hooks
+feat: implement 'deinit' command to remove commit-msg hook

@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"os"
 	"os/exec"
+	"runtime"
 	"strings"
 )
 
@@ -49,6 +50,13 @@ func detectEditor() string {
 		return e
 	}
 
-	// fallback
-	return "vi"
+	// fallback por sistema
+	switch runtime.GOOS {
+	case "windows":
+		return "notepad"
+	case "darwin":
+		return "nano"
+	default:
+		return "nano"
+	}
 }
