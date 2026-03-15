@@ -1,1 +1,1 @@
-feat: implement 'deinit' command to remove commit-msg hook
+feat: implement spinner at commit improvement action

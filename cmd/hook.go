@@ -67,11 +67,19 @@ var hookCmd = &cobra.Command{
 
 		prompt := prompt.Build(message, diff, cfg.Language)
 
+		spinner := ui.New("Improving commit message...\n")
+		spinner.Start()
+		defer spinner.Stop()
+
 		improvedMessage, err := provider.ImproveCommitMessage(ctx, prompt)
 		if err != nil {
-			fmt.Println("AI error:", err)
+			spinner.Stop()
+			fmt.Println("✖ Failed to improve commit", err)
 			return
 		}
+
+		spinner.Stop()
+		fmt.Print("✔ Commit message improved\n\n")
 
 		ui.ShowPreview(message, improvedMessage)
 
