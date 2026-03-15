@@ -9,24 +9,17 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	globalFlag   bool
-	repoFlag     bool
-	repoUserFlag bool
-	editorFlag   bool
-)
+var editorFlag bool
 
 var configEditCmd = &cobra.Command{
 	Use:   "edit",
 	Short: "Edit configuration",
 	Run: func(cmd *cobra.Command, args []string) {
-
 		repoRoot, _ := git.GetRepoRoot()
 
 		var path string
 
 		switch {
-
 		case globalFlag:
 			path = config.GlobalConfigPath()
 

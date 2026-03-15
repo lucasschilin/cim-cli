@@ -6,6 +6,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	globalFlag   bool
+	repoFlag     bool
+	repoUserFlag bool
+)
+
 var rootCmd = &cobra.Command{
 	Use:   "cim-cli",
 	Short: "Commit Improver CLI",
