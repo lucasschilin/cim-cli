@@ -1,11 +1,8 @@
 package cmd
 
 import (
-	"bufio"
 	"context"
 	"fmt"
-	"os"
-	"strings"
 	"time"
 
 	"github.com/lucasschilin/cim-cli/internal/ai"
@@ -26,16 +23,6 @@ var improveCmd = &cobra.Command{
 
 		if messageFlag != "" {
 			message = messageFlag
-		}
-
-		if message == "" {
-			stat, _ := os.Stdin.Stat()
-
-			if (stat.Mode() & os.ModeCharDevice) != 0 {
-				reader := bufio.NewReader(os.Stdin)
-				input, _ := reader.ReadString('\n')
-				message = strings.TrimSpace(input)
-			}
 		}
 
 		if message == "" {
@@ -77,7 +64,7 @@ var improveCmd = &cobra.Command{
 		improvedMessage, err := provider.ImproveCommitMessage(ctx, prompt)
 		if err != nil {
 			spinner.Stop()
-			fmt.Println("✖ Failed to improve commit", err)
+			fmt.Println("✖ Failed to improve commit:", err)
 			return
 		}
 
