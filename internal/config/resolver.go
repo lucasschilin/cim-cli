@@ -5,14 +5,15 @@ import (
 )
 
 // ResolveConfig carrega e combina as configurações dos 3 níveis.
-func ResolveConfig(repoRoot string) (*Config, error) {
+func Resolve(repoRoot string) (*Config, error) {
 
 	final := &Config{}
 
-	paths := []string{
-		GlobalConfigPath(),
-		RepoUserConfigPath(repoRoot),
-		RepoSharedConfigPath(repoRoot),
+	paths := []string{GlobalConfigPath()}
+
+	if repoRoot != "" {
+		paths = append(paths, RepoUserConfigPath(repoRoot))
+		paths = append(paths, RepoSharedConfigPath(repoRoot))
 	}
 
 	for _, path := range paths {

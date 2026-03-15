@@ -9,7 +9,7 @@ provider: gemini
 model: gemini-2.5-flash
 
 # Language used for generated commits. Options: 'en' (English), 'pt-BR' (Português do Brasil) or 'es' (Español). Default: 'en'
-language: en
+language: pt-BR
 
 # Maximum number of diff lines sent to the LLM. Default: 200
 diff_limit: 0

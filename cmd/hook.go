@@ -24,7 +24,7 @@ var hookCmd = &cobra.Command{
 			fmt.Println("Not inside a git repository")
 			return
 		}
-		cfg, err := config.ResolveConfig(repoRoot)
+		cfg, err := config.Resolve(repoRoot)
 		if err != nil {
 			fmt.Println("Config error:", err)
 			return
