@@ -31,6 +31,8 @@ builds:
       - arm64
     ldflags:
       - -X github.com/lucasschilin/cim-cli/internal/version.Version={{.Version}}
+      - -X github.com/lucasschilin/cim-cli/internal/version.Commit={{.Commit}}
+      - -X github.com/lucasschilin/cim-cli/internal/version.Date={{.Date}}
     
 
 archives:

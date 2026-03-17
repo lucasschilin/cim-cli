@@ -22,5 +22,5 @@ func Execute() error {
 }
 
 func init() {
-	rootCmd.SetVersionTemplate("{{.Version}}\n")
+	rootCmd.SetVersionTemplate("cim-cli {{.Version}}\n")
 }
