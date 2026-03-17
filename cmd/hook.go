@@ -100,7 +100,7 @@ var hookCmd = &cobra.Command{
 		if editCommitMessage {
 			err := editor.Open(path)
 			if err != nil {
-				return fmt.Errorf("failed to open editor: %w", err)
+				return fmt.Errorf("Failed to open editor: %w", err)
 			}
 		}
 
