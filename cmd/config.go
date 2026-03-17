@@ -7,9 +7,6 @@ import (
 var configCmd = &cobra.Command{
 	Use:   "config",
 	Short: "Manage cim-cli configuration",
-	Run: func(cmd *cobra.Command, args []string) {
-
-	},
 }
 
 func init() {

@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -20,7 +21,7 @@ var messageFlag string
 var improveCmd = &cobra.Command{
 	Use:   "improve",
 	Short: "Improve commit message",
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		var message string
 
 		if messageFlag != "" {
@@ -30,26 +31,23 @@ var improveCmd = &cobra.Command{
 		if message == "" {
 			msg, err := editor.OpenTempFile()
 			if err != nil {
-				fmt.Println("Failed to open editor:", err)
-				return
+				return fmt.Errorf("Failed to open editor: %v", err)
 			}
 
 			message = strings.TrimSpace(msg)
 		}
 
 		if message == "" {
-			fmt.Println("Commit message not provided")
-			return
+			return errors.New("Commit message not provided")
 		}
 
 		repoRoot, err := git.GetRepoRoot()
 		if err != nil {
-			fmt.Println("Not inside a git repository")
+			return fmt.Errorf("Not inside a git repository: %v", err)
 		}
 		cfg, err := config.Resolve(repoRoot)
 		if err != nil {
-			fmt.Println("Config error:", err)
-			return
+			return fmt.Errorf("Config error: %v", err)
 		}
 
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -63,8 +61,7 @@ var improveCmd = &cobra.Command{
 
 		provider, err := ai.NewProvider(ctx, aiCfg)
 		if err != nil {
-			fmt.Println("Error creating AI provider:", err)
-			return
+			return fmt.Errorf("Error creating AI provider: %v", err)
 		}
 
 		prompt := prompt.Build(message, "", cfg.Language)
@@ -76,14 +73,15 @@ var improveCmd = &cobra.Command{
 		improvedMessage, err := provider.ImproveCommitMessage(ctx, prompt)
 		if err != nil {
 			spinner.Stop()
-			fmt.Println("✖ Failed to improve commit:", err)
-			return
+			return fmt.Errorf("✖ Failed to improve commit: %v", err)
 		}
 
 		spinner.Stop()
 		fmt.Print("✔ Commit message improved\n\n")
 
 		ui.ShowPreview(message, improvedMessage)
+
+		return nil
 
 	},
 }

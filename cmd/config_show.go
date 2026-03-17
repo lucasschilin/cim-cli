@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/lucasschilin/cim-cli/internal/config"
@@ -11,11 +12,10 @@ import (
 var configShowCmd = &cobra.Command{
 	Use:   "show",
 	Short: "Show configuration",
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		repoRoot, _ := git.GetRepoRoot()
 		if repoRoot == "" {
-			fmt.Println("Not inside a git repository")
-			return
+			return errors.New("Not  inside a git repository")
 		}
 
 		var (
@@ -38,17 +38,17 @@ var configShowCmd = &cobra.Command{
 		}
 
 		if err != nil {
-			fmt.Println("Config error:", err)
-			return
+			return fmt.Errorf("Config error: %v", err)
 		}
 
 		output, err := config.ToYAML(cfg)
 		if err != nil {
-			fmt.Println("Error serializing config:", err)
-			return
+			return fmt.Errorf("Error serializing config: %v", err)
 		}
 
 		fmt.Println(output)
+
+		return nil
 
 	},
 }

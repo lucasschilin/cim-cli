@@ -10,20 +10,20 @@ import (
 var deinitCmd = &cobra.Command{
 	Use:   "deinit",
 	Short: "Remove cim-cli git hook",
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		repoRoot, err := git.GetRepoRoot()
 		if err != nil {
-			fmt.Println("Not inside a git repository")
-			return
+			return fmt.Errorf("Not inside a git repository: %v", err)
 		}
 
 		err = git.RemoveCommitMsgHook(repoRoot)
 		if err != nil {
-			fmt.Println("Error removing cim-cli hook:", err)
-			return
+			return fmt.Errorf("Error removing cim-cli hook: %v", err)
 		}
 
 		fmt.Println("cim-cli hook removed :(")
+
+		return nil
 	},
 }
 

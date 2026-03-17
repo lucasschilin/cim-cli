@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/lucasschilin/cim-cli/internal/config"
@@ -9,12 +10,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var editorFlag bool
-
 var configEditCmd = &cobra.Command{
 	Use:   "edit",
 	Short: "Edit configuration",
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		repoRoot, _ := git.GetRepoRoot()
 
 		var path string
@@ -30,24 +29,17 @@ var configEditCmd = &cobra.Command{
 			path = config.RepoSharedConfigPath(repoRoot)
 
 		default:
-			fmt.Println(
-				"You need to inform which configuration to edit.\nUse one of the following flags: --global, --repo, --repo-user",
-			)
-			return
+			return errors.New("You need to inform which configuration to edit.\nUse one of the following flags: --global, --repo, --repo-user")
 		}
 
 		err := config.EnsureConfigFile(path)
 		if err != nil {
-			fmt.Println("Error creating config file", err)
-			return
-		}
-
-		if editorFlag != false {
-			editor.Open(path)
-			return
+			return fmt.Errorf("Error creating config file: %v", err)
 		}
 
 		editor.Open(path)
+
+		return nil
 
 	},
 }
@@ -58,6 +50,4 @@ func init() {
 	configEditCmd.Flags().BoolVar(&globalFlag, "global", false, "Edit global config")
 	configEditCmd.Flags().BoolVar(&repoFlag, "repo", false, "Edit shared repo config")
 	configEditCmd.Flags().BoolVar(&repoUserFlag, "repo-user", false, "Edit user config for this repo")
-
-	configEditCmd.Flags().BoolVarP(&editorFlag, "editor", "e", false, "Edit config using editor")
 }

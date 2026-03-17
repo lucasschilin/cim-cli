@@ -11,25 +11,25 @@ import (
 var initCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Initialize Commit Improver Hook",
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		repoRoot, err := git.GetRepoRoot()
 		if err != nil {
-			fmt.Println("Not inside a git repository")
-			return
+			return fmt.Errorf("Not inside a git repository: %v", err)
 		}
 		_, err = config.Resolve(repoRoot)
 		if err != nil {
-			fmt.Println("Config error:", err)
-			return
+			return fmt.Errorf("Config error: %v", err)
 		}
 
 		err = git.InstallCommitMsgHook(repoRoot)
 		if err != nil {
-			fmt.Println("Error installing cim-cli hook:", err)
-			return
+			return fmt.Errorf("Error installing cim-cli hook: %v", err)
+
 		}
 
 		fmt.Println("cim-cli hook installed :D")
+
+		return nil
 	},
 }
 
