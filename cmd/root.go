@@ -1,8 +1,7 @@
 package cmd
 
 import (
-	"fmt"
-
+	"github.com/lucasschilin/cim-cli/internal/version"
 	"github.com/spf13/cobra"
 )
 
@@ -13,15 +12,15 @@ var (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "cim-cli",
-	Short: "Commit Improver CLI",
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Commit Improver CLI running")
-	},
+	Use:     "cim-cli",
+	Short:   "Commit Improver CLI",
+	Version: version.Version,
 }
 
 func Execute() error {
-
 	return rootCmd.Execute()
+}
 
+func init() {
+	rootCmd.SetVersionTemplate("{{.Version}}\n")
 }

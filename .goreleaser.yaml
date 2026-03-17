@@ -29,6 +29,8 @@ builds:
     goarch:
       - amd64
       - arm64
+    ldflags:
+      - -X github.com/lucasschilin/cim-cli/internal/version.Version={{.Version}}
     
 
 archives:
