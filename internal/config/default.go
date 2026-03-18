@@ -7,8 +7,8 @@ const DefaultConfigTemplate = `# Commit Improver CLI configuration
 # Language used for generated commits. Options: 'en' (English), 'pt-BR' (Português do Brasil) or 'es' (Español). Default: 'en'
 language: en
 
-# Maximum number of diff lines sent to the LLM. Default: 200
-diff_limit: 200
+# Maximum number of diff lines sent to the LLM. Default: 0
+diff_limit: 0
 
 # Maximum number of seconds to wait for a response from the LLM. Default: 20
 improvement_request_timeout: 20

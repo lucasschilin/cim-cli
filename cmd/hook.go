@@ -40,14 +40,16 @@ var hookCmd = &cobra.Command{
 			return fmt.Errorf("Error reading commit message: %v", err)
 		}
 
-		diff, err := git.GetStagedDiff()
-		if err != nil {
-			return fmt.Errorf("Error reading diff: %v", err)
+		diff := ""
+		if cfg.DiffLimit != nil {
+			diff, err = git.GetStagedDiff()
+			if err != nil {
+				return fmt.Errorf("Error reading diff: %v", err)
+			}
+			diff = git.LimitDiff(diff, *cfg.DiffLimit)
 		}
 
-		diff = git.LimitDiff(diff, cfg.DiffLimit)
-
-		ctx, cancel := context.WithTimeout(context.Background(), time.Duration(cfg.ImprovementRequestTimeout)*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), time.Duration(*cfg.ImprovementRequestTimeout)*time.Second)
 		defer cancel()
 
 		aiCfg := ai.Config{

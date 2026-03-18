@@ -4,9 +4,9 @@ import "errors"
 
 type Config struct {
 	Language                  string `yaml:"language"`
-	DiffLimit                 int    `yaml:"diff_limit"`
+	DiffLimit                 *int   `yaml:"diff_limit"`
 	AllowFinalEdit            bool   `yaml:"allow_final_edit"`
-	ImprovementRequestTimeout int    `yaml:"improvement_request_timeout"`
+	ImprovementRequestTimeout *int   `yaml:"improvement_request_timeout"`
 
 	Provider string `yaml:"provider"`
 	Model    string `yaml:"model"`
@@ -20,12 +20,14 @@ func (c *Config) ApplyDefaults() {
 		c.Language = "en"
 	}
 
-	if c.DiffLimit == 0 {
-		c.DiffLimit = 200
+	if c.DiffLimit == nil {
+		val := 0
+		c.DiffLimit = &val
 	}
 
-	if c.ImprovementRequestTimeout == 0 {
-		c.ImprovementRequestTimeout = 20
+	if c.ImprovementRequestTimeout == nil {
+		val := 20
+		c.ImprovementRequestTimeout = &val
 	}
 
 	if c.Provider == "" {
@@ -42,11 +44,11 @@ func (c *Config) Validate() error {
 		return errors.New("config: language is required")
 	}
 
-	if c.DiffLimit <= 0 {
-		return errors.New("config: diff_limit is required and must be greater than zero")
+	if c.DiffLimit != nil && *c.DiffLimit < 0 {
+		return errors.New("config: diff_limit must be 0 or greater")
 	}
 
-	if c.ImprovementRequestTimeout <= 0 {
+	if c.ImprovementRequestTimeout != nil && *c.ImprovementRequestTimeout <= 0 {
 		return errors.New("config: improvement_request_timeout is required and must be greater than zero")
 	}
 

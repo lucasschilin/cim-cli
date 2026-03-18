@@ -45,11 +45,11 @@ func mergeConfig(dst *Config, src *Config) {
 		dst.Language = src.Language
 	}
 
-	if src.DiffLimit != 0 {
+	if src.DiffLimit != nil {
 		dst.DiffLimit = src.DiffLimit
 	}
 
-	if src.ImprovementRequestTimeout != 0 {
+	if src.ImprovementRequestTimeout != nil {
 		dst.ImprovementRequestTimeout = src.ImprovementRequestTimeout
 	}
 
