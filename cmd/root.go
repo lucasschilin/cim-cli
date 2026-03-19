@@ -12,9 +12,11 @@ var (
 )
 
 var rootCmd = &cobra.Command{
-	Use:     "cim-cli",
-	Short:   "Commit Improver CLI",
-	Version: version.Version,
+	Use:           "cim-cli",
+	Short:         "Commit Improver CLI",
+	Version:       version.Version,
+	SilenceErrors: true,
+	SilenceUsage:  true,
 }
 
 func Execute() error {

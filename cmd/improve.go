@@ -16,7 +16,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var messageFlag string
+var (
+	messageFlag string
+	debugFlag   bool
+)
 
 var improveCmd = &cobra.Command{
 	Use:   "improve",
@@ -59,12 +62,18 @@ var improveCmd = &cobra.Command{
 			APIKey:   cfg.Gemini.APIKey,
 		}
 
+		prompt := prompt.Build(message, "", cfg.Language)
+
+		if debugFlag {
+			fmt.Println("=== GENERATED PROMPT ===")
+			fmt.Println(prompt)
+			return nil
+		}
+
 		provider, err := ai.NewProvider(ctx, aiCfg)
 		if err != nil {
 			return fmt.Errorf("Error creating AI provider: %v", err)
 		}
-
-		prompt := prompt.Build(message, "", cfg.Language)
 
 		spinner := ui.New("Improving commit message...\n")
 		spinner.Start()
@@ -90,4 +99,5 @@ func init() {
 	rootCmd.AddCommand(improveCmd)
 
 	improveCmd.Flags().StringVarP(&messageFlag, "message", "m", "", "Commit message to improve")
+	improveCmd.Flags().BoolVar(&debugFlag, "debug", false, "Enable debug mode, do not send the prompt to the AI and just print the final prompt")
 }
