@@ -27,28 +27,6 @@ func NewGemini(ctx context.Context, apiKey string, model string) (*Gemini, error
 	}, nil
 }
 
-type geminiRequest struct {
-	Contents []geminiContent `json:"contents"`
-}
-
-type geminiContent struct {
-	Parts []geminiPart `json:"parts"`
-}
-
-type geminiPart struct {
-	Text string `json:"text"`
-}
-
-type geminiResponse struct {
-	Candidates []struct {
-		Content struct {
-			Parts []struct {
-				Text string `json:"text"`
-			} `json:"parts"`
-		} `json:"content"`
-	} `json:"candidates"`
-}
-
 func (g *Gemini) ImproveCommitMessage(
 	ctx context.Context,
 	prompt string,
