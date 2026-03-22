@@ -13,9 +13,18 @@ func Open(path string) error {
 
 	cmd := exec.Command(editor, path)
 
-	cmd.Stdin = os.Stdin
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
+	tty, err := os.OpenFile("/dev/tty", os.O_RDWR, 0)
+	if err != nil {
+		cmd.Stdin = os.Stdin
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+		return cmd.Run()
+	}
+	defer tty.Close()
+
+	cmd.Stdin = tty
+	cmd.Stdout = tty
+	cmd.Stderr = tty
 
 	return cmd.Run()
 }
@@ -32,7 +41,7 @@ func OpenTempFile() (string, error) {
 
 	editor := detectEditor()
 
-	editCmd := exec.Command("sh", "-c", editor+" "+path)
+	editCmd := exec.Command(editor, path)
 	editCmd.Stdin = os.Stdin
 	editCmd.Stdout = os.Stdout
 	editCmd.Stderr = os.Stderr
