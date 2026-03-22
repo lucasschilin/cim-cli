@@ -5,7 +5,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -33,6 +35,7 @@ type ollamaRequest struct {
 
 type ollamaResponse struct {
 	Response string `json:"response"`
+	Error    string `json:"error"` // captura erro do Ollama
 }
 
 func (o *Ollama) ImproveCommitMessage(
@@ -48,7 +51,7 @@ func (o *Ollama) ImproveCommitMessage(
 
 	jsonData, err := json.Marshal(reqBody)
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("failed to marshal request: %w", err)
 	}
 
 	req, err := http.NewRequestWithContext(
@@ -58,7 +61,7 @@ func (o *Ollama) ImproveCommitMessage(
 		bytes.NewBuffer(jsonData),
 	)
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("failed to create request: %w", err)
 	}
 
 	req.Header.Set("Content-Type", "application/json")
@@ -69,9 +72,31 @@ func (o *Ollama) ImproveCommitMessage(
 	}
 	defer resp.Body.Close()
 
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return "", fmt.Errorf("failed to read response body: %w", err)
+	}
+
 	var result ollamaResponse
-	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
-		return "", err
+	_ = json.Unmarshal(body, &result)
+
+	if resp.StatusCode != http.StatusOK {
+		if result.Error != "" {
+			return "", fmt.Errorf("ollama error: %s", result.Error)
+		}
+		return "", fmt.Errorf(
+			"ollama returned status %d: %s",
+			resp.StatusCode,
+			string(body),
+		)
+	}
+
+	if result.Error != "" {
+		return "", fmt.Errorf("ollama error: %s", result.Error)
+	}
+
+	if strings.TrimSpace(result.Response) == "" {
+		return "", fmt.Errorf("ollama returned empty response")
 	}
 
 	return result.Response, nil

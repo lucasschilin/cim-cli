@@ -16,7 +16,7 @@ improvement_request_timeout: 20
 # Allow the user to edit the final commit message. Default: false
 allow_final_edit: false
 
-# LLM provider used to improve commits. Options: 'gemini' or 'openai'. Default: 'gemini'
+# LLM provider used to improve commits. Options: 'gemini', 'openai' or 'ollama'. Default: 'gemini'
 provider: gemini
 
 # Model name used by the provider. Default: 'gemini-2.5-flash'
