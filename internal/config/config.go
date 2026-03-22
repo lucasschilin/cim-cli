@@ -13,6 +13,9 @@ type Config struct {
 	Gemini   struct {
 		APIKey string `yaml:"api_key"`
 	} `yaml:"gemini"`
+	Openai struct {
+		APIKey string `yaml:"api_key"`
+	} `yaml:"openai"`
 }
 
 func (c *Config) ApplyDefaults() {
@@ -60,9 +63,14 @@ func (c *Config) Validate() error {
 		return errors.New("config: model is required")
 	}
 
-	if c.Provider == "gemini" {
+	switch c.Provider {
+	case "gemini":
 		if c.Gemini.APIKey == "" {
 			return errors.New("config: gemini.api_key is required")
+		}
+	case "openai":
+		if c.Gemini.APIKey == "" {
+			return errors.New("config: openai.api_key is required")
 		}
 	}
 

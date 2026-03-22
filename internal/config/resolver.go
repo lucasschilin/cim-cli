@@ -68,4 +68,8 @@ func mergeConfig(dst *Config, src *Config) {
 	if src.Gemini.APIKey != "" {
 		dst.Gemini.APIKey = src.Gemini.APIKey
 	}
+
+	if src.Openai.APIKey != "" {
+		dst.Openai.APIKey = src.Openai.APIKey
+	}
 }
