@@ -72,4 +72,8 @@ func mergeConfig(dst *Config, src *Config) {
 	if src.Openai.APIKey != "" {
 		dst.Openai.APIKey = src.Openai.APIKey
 	}
+
+	if src.Ollama.BaseURL != "" {
+		dst.Ollama.BaseURL = src.Ollama.BaseURL
+	}
 }

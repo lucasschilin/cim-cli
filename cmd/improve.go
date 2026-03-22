@@ -56,12 +56,6 @@ var improveCmd = &cobra.Command{
 		ctx, cancel := context.WithTimeout(context.Background(), time.Duration(*cfg.ImprovementRequestTimeout)*time.Second)
 		defer cancel()
 
-		aiCfg := ai.Config{
-			Provider: cfg.Provider,
-			Model:    cfg.Model,
-			APIKey:   cfg.Gemini.APIKey,
-		}
-
 		prompt := prompt.Build(message, "", cfg.Language)
 
 		if promptFlag {
@@ -70,7 +64,7 @@ var improveCmd = &cobra.Command{
 			return nil
 		}
 
-		provider, err := ai.NewProvider(ctx, aiCfg)
+		provider, err := ai.NewProvider(ctx, cfg)
 		if err != nil {
 			return fmt.Errorf("Error creating AI provider: %v", err)
 		}
@@ -91,7 +85,6 @@ var improveCmd = &cobra.Command{
 		ui.ShowPreview(message, improvedMessage)
 
 		return nil
-
 	},
 }
 

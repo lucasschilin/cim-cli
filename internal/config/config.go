@@ -16,6 +16,9 @@ type Config struct {
 	Openai struct {
 		APIKey string `yaml:"api_key"`
 	} `yaml:"openai"`
+	Ollama struct {
+		BaseURL string `yaml:"base_url"`
+	} `yaml:"ollama"`
 }
 
 func (c *Config) ApplyDefaults() {
@@ -71,6 +74,10 @@ func (c *Config) Validate() error {
 	case "openai":
 		if c.Openai.APIKey == "" {
 			return errors.New("config: openai.api_key is required")
+		}
+	case "ollama":
+		if c.Ollama.BaseURL == "" {
+			return errors.New("config: ollama.base_url is required")
 		}
 	}
 

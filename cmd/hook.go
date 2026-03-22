@@ -52,12 +52,7 @@ var hookCmd = &cobra.Command{
 		ctx, cancel := context.WithTimeout(context.Background(), time.Duration(*cfg.ImprovementRequestTimeout)*time.Second)
 		defer cancel()
 
-		aiCfg := ai.Config{
-			Provider: cfg.Provider,
-			Model:    cfg.Model,
-			APIKey:   cfg.Gemini.APIKey,
-		}
-		provider, err := ai.NewProvider(ctx, aiCfg)
+		provider, err := ai.NewProvider(ctx, cfg)
 		if err != nil {
 			return fmt.Errorf("Provider error: %v", err)
 		}

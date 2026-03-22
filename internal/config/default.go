@@ -29,5 +29,9 @@ gemini:
 openai:
   # Openai API key
   api_key: # REQUIRED (not indicated for --repo configurations, as it will be versioned with the code)
+  
+ollama:
+  # Ollama Base URL
+  base_url: # REQUIRED
 
 `
