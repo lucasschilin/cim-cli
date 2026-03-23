@@ -1,1 +1,0 @@
-remove opção de utilizar o comando imrpove juntamnete com o esquema de pipe
