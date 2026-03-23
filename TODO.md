@@ -9,3 +9,6 @@
 - [ ] Estruturar um README mais completo e adicionar arquivos auxiliares (`ROADMAP.md`, `CONTRIBUTING.md`)
 - [ ] Adicionar testes automatizados
 - [ ] Implementar comando de atualização (`cim-cli update`)
+- [ ] Salvar logs
+- [ ] Coletar métricas
+- [ ] Adicionar opção de cancelar Commit no `cim-cli hook`
