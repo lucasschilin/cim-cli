@@ -103,6 +103,8 @@ cim-cli will suggest an improved message before completing the commit.
 
 ### Manual
 
+![alt text](docs/demos/manual.gif)
+
 You can also improve messages manually:
 ```bash
 cim-cli improve -m "fix login"
