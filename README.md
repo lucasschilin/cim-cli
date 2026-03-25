@@ -21,6 +21,8 @@ Use AI to automatically transform your commits into clear, standardized Conventi
 
 ⭐ If this project helps you, consider giving it a star.
 
+> ![alt text](docs/images/hook.gif)
+
 ---
 
 ## Why?
@@ -193,6 +195,7 @@ or:
 ```bash
 cim-cli improve
 ```
+> ![alt text](docs/images/improve.gif)
 
 This is useful when you want to refine a message outside the commit flow.
 
