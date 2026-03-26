@@ -2,6 +2,7 @@ package editor
 
 import (
 	"bytes"
+	"fmt"
 	"os"
 	"os/exec"
 	"runtime"
@@ -10,8 +11,16 @@ import (
 
 func Open(path string) error {
 	editor := detectEditor()
+	if isInvalidEditor(editor) {
+		return fmt.Errorf("Env dump: GIT_EDITOR=%q VISUAL=%q EDITOR=%q\n",
+			os.Getenv("GIT_EDITOR"),
+			os.Getenv("VISUAL"),
+			os.Getenv("EDITOR"),
+		)
+	}
 
-	cmd := exec.Command(editor, path)
+	parts := strings.Fields(editor)
+	cmd := exec.Command(parts[0], append(parts[1:], path)...)
 
 	tty, err := os.OpenFile("/dev/tty", os.O_RDWR, 0)
 	if err != nil {
@@ -40,8 +49,13 @@ func OpenTempFile() (string, error) {
 	defer os.Remove(path)
 
 	editor := detectEditor()
+	if isInvalidEditor(editor) {
+		return "", fmt.Errorf("no valid editor configured")
+	}
 
-	editCmd := exec.Command(editor, path)
+	parts := strings.Fields(editor)
+	editCmd := exec.Command(parts[0], append(parts[1:], path)...)
+
 	editCmd.Stdin = os.Stdin
 	editCmd.Stdout = os.Stdout
 	editCmd.Stderr = os.Stderr
@@ -61,7 +75,7 @@ func OpenTempFile() (string, error) {
 func detectEditor() string {
 
 	// variável do git
-	if e := os.Getenv("GIT_EDITOR"); e != "" {
+	if e := os.Getenv("GIT_EDITOR"); !isInvalidEditor(e) {
 		return e
 	}
 
@@ -79,12 +93,12 @@ func detectEditor() string {
 	}
 
 	// VISUAL
-	if e := os.Getenv("VISUAL"); e != "" {
+	if e := os.Getenv("VISUAL"); !isInvalidEditor(e) {
 		return e
 	}
 
 	// EDITOR
-	if e := os.Getenv("EDITOR"); e != "" {
+	if e := os.Getenv("EDITOR"); !isInvalidEditor(e) {
 		return e
 	}
 
@@ -97,4 +111,9 @@ func detectEditor() string {
 	default:
 		return "nano"
 	}
+}
+
+func isInvalidEditor(e string) bool {
+	e = strings.TrimSpace(e)
+	return e == "" || e == ":" || e == "true"
 }
