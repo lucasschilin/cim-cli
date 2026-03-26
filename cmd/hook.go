@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/lucasschilin/cim-cli/internal/ai"
@@ -95,6 +96,9 @@ var hookCmd = &cobra.Command{
 			return err
 		}
 		if editCommitMessage {
+			fmt.Println("DEBUG GIT_EDITOR:", os.Getenv("GIT_EDITOR"))
+			fmt.Println("DEBUG VISUAL:", os.Getenv("VISUAL"))
+			fmt.Println("DEBUG EDITOR:", os.Getenv("EDITOR"))
 			err := editor.Open(path)
 			if err != nil {
 				return fmt.Errorf("Failed to open editor: %v", err)
