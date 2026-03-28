@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var configTemplateCmd = &cobra.Command{
+var configParamsTemplateCmd = &cobra.Command{
 	Use:   "template",
 	Short: "Show configuration file default template",
 	RunE: func(cmd *cobra.Command, args []string) error {
@@ -27,5 +27,5 @@ var configTemplateCmd = &cobra.Command{
 }
 
 func init() {
-	configCmd.AddCommand(configTemplateCmd)
+	configParamsCmd.AddCommand(configParamsTemplateCmd)
 }

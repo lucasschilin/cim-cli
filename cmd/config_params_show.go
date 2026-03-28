@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var configShowCmd = &cobra.Command{
+var configParamsShowCmd = &cobra.Command{
 	Use:   "show",
 	Short: "Show configuration",
 	RunE: func(cmd *cobra.Command, args []string) error {
@@ -54,9 +54,9 @@ var configShowCmd = &cobra.Command{
 }
 
 func init() {
-	configCmd.AddCommand(configShowCmd)
+	configParamsCmd.AddCommand(configParamsShowCmd)
 
-	configShowCmd.Flags().BoolVar(&globalFlag, "global", false, "Show global config")
-	configShowCmd.Flags().BoolVar(&repoFlag, "repo", false, "Show shared repo config")
-	configShowCmd.Flags().BoolVar(&repoUserFlag, "repo-user", false, "Show user config for this repo")
+	configParamsShowCmd.Flags().BoolVar(&globalFlag, "global", false, "Show global config")
+	configParamsShowCmd.Flags().BoolVar(&repoFlag, "repo", false, "Show shared repo config")
+	configParamsShowCmd.Flags().BoolVar(&repoUserFlag, "repo-user", false, "Show user config for this repo")
 }

@@ -10,7 +10,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var configEditCmd = &cobra.Command{
+var configParamsEditCmd = &cobra.Command{
 	Use:   "edit",
 	Short: "Edit configuration",
 	RunE: func(cmd *cobra.Command, args []string) error {
@@ -48,9 +48,9 @@ var configEditCmd = &cobra.Command{
 }
 
 func init() {
-	configCmd.AddCommand(configEditCmd)
+	configParamsCmd.AddCommand(configParamsEditCmd)
 
-	configEditCmd.Flags().BoolVar(&globalFlag, "global", false, "Edit global config")
-	configEditCmd.Flags().BoolVar(&repoFlag, "repo", false, "Edit shared repo config")
-	configEditCmd.Flags().BoolVar(&repoUserFlag, "repo-user", false, "Edit user config for this repo")
+	configParamsEditCmd.Flags().BoolVar(&globalFlag, "global", false, "Edit global config")
+	configParamsEditCmd.Flags().BoolVar(&repoFlag, "repo", false, "Edit shared repo config")
+	configParamsEditCmd.Flags().BoolVar(&repoUserFlag, "repo-user", false, "Edit user config for this repo")
 }
