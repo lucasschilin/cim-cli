@@ -133,7 +133,7 @@ You can check the configurations options using:
 cim-cli config template
 ``` 
 
-### Commands
+#### Commands
 
 Edit configuration:
 ```bash
@@ -154,6 +154,32 @@ cim-cli config params show
 
 ### API Key Configuration
 You need to set up an API key configuration in the configuration edit
+
+### Prompt Configuration
+
+cim-cli also allows you to customize the AI prompt used to generate commit messages.
+
+This gives you full control over how suggestions are generated — including tone, style, level of detail, or even enforcing team-specific conventions.
+
+
+#### Commands
+
+Edit prompt configuration:
+```bash
+cim-cli config prompt edit --global
+cim-cli config prompt edit --repo
+cim-cli config prompt edit --repo-user
+```
+View prompt configuration:
+```bash
+cim-cli config prompt show --global
+cim-cli config prompt show --repo
+cim-cli config prompt show --repo-user
+```
+View the final merged prompt:
+```bash
+cim-cli config prompt show
+```
 
 ---
 
