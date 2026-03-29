@@ -10,7 +10,7 @@ import (
 
 var hookInstallCmd = &cobra.Command{
 	Use:   "hook-install",
-	Short: "Install hook",
+	Short: "Install git hook",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		repoRoot, err := git.GetRepoRoot()
 		if err != nil {
