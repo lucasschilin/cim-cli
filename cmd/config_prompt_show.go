@@ -39,7 +39,7 @@ var configPromptShowCmd = &cobra.Command{
 		if err != nil {
 			return fmt.Errorf("Prompt config error: %v", err)
 		}
-		if !found {
+		if !found && (globalFlag || repoUserFlag || repoFlag) {
 			return errors.New("Prompt config not found")
 		}
 
