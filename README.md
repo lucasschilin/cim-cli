@@ -209,6 +209,32 @@ git commit -m "fix"
 ```
 cim-cli will suggest an improved message before completing the commit.
 
+#### Skipping the AI
+
+Sometimes you may want to keep your commit message exactly as you wrote it.
+
+You can bypass cim-cli by starting your commit message with:
+
+```bash
+#ignore
+```
+
+Example:
+
+```bash
+git commit -m "#ignore
+hotfix: urgent production fix"
+```
+
+When cim-cli detects this prefix, it will skip any processing and leave your message unchanged.
+
+This is useful when:
+
+* You already wrote the exact message you want
+* You are committing something temporary or experimental
+* You need full manual control over the commit message
+
+
 ### Manual
 
 You can also improve messages manually:

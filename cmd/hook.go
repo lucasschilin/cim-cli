@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/lucasschilin/cim-cli/internal/ai"
@@ -38,6 +39,10 @@ var hookCmd = &cobra.Command{
 		message, err := commit.ReadCommitMessage(path)
 		if err != nil {
 			return fmt.Errorf("Error reading commit message: %v", err)
+		}
+
+		if strings.HasPrefix(message, "#ignore\n") {
+			return nil
 		}
 
 		diff := ""
