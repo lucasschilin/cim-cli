@@ -42,6 +42,7 @@ var hookCmd = &cobra.Command{
 		}
 
 		if strings.HasPrefix(message, "#ignore\n") {
+			fmt.Print("✔ Commit improvement ignored :)\n\n")
 			return nil
 		}
 
